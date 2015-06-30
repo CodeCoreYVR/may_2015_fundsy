@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :campaigns, dependent: :destroy
+
   has_secure_password
 
   validates :first_name, presence: true

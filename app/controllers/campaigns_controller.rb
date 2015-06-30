@@ -9,7 +9,11 @@ class CampaignsController < ApplicationController
     campaign_params = params.require(:campaign).
                         permit(:title, :description, :due_date, :goal)
     @campaign = Campaign.new campaign_params
-    @campaign.save
-    redirect_to campaign_path(@campaign), notice: "Campaign created!"
+    @campaign.user = current_user
+    if @campaign.save
+      redirect_to campaign_path(@campaign), notice: "Campaign created!"
+    else
+      render :new
+    end
   end
 end
