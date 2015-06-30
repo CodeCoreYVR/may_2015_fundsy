@@ -4,7 +4,9 @@ RSpec.describe CampaignsController, type: :controller do
   # this will give us a variable called `user` accessible anywhere within this
   # scope. It won't create the user in the database until you actually call
   # the variable or use let!
-  let(:user) { create(:user) }
+  let(:user)     { create(:user) }
+  let(:user_1)   { create(:user) }
+  let(:campaign) { create(:campaign, user: user) }
 
   describe "#new" do
     it "renders the new template" do
@@ -76,14 +78,34 @@ RSpec.describe CampaignsController, type: :controller do
 
   describe "#edit" do
     context "user not signed in" do
-
+      it "redirects to the new session path" do
+        get :edit, id: campaign.id
+        expect(response).to redirect_to new_session_path
+      end
     end
     context "user signed in" do
-      context "user is owner of campaign" do
+      before do
+        request.session[:user_id] = user.id
+      end
 
+      context "user is owner of campaign" do
+        it "renders the edit template" do
+          get :edit, id: campaign.id
+          expect(response).to render_template(:edit)
+        end
+        it "instantiates the campaign instance variable with the id passed" do
+          get :edit, id: campaign.id
+          expect(assigns(:campaign)).to eq(campaign)
+        end
       end
       context "user is not the owner of the campaign" do
+        before do
+          request.session[:user_id] = user_1.id
+        end
 
+        it "throws an error" do
+          expect { get :edit, id: campaign.id }.to raise_error(ActiveRecord::RecordNotFound)
+        end
       end
     end
   end

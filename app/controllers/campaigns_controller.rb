@@ -1,5 +1,5 @@
 class CampaignsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_user!, only: [:create, :edit]
 
   def new
     @campaign = Campaign.new
@@ -15,5 +15,9 @@ class CampaignsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+    @campaign = current_user.campaigns.find params[:id]
   end
 end
