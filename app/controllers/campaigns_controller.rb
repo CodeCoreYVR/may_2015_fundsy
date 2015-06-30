@@ -20,4 +20,8 @@ class CampaignsController < ApplicationController
   def edit
     @campaign = current_user.campaigns.find params[:id]
   end
+
+  def show
+    @campaign = Campaign.find params[:id]
+  end
 end

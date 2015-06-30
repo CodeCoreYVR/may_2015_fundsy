@@ -110,6 +110,18 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
+  describe "#show" do
+    before { get :show, id: campaign.id }
+
+    it "renders the show template" do
+      expect(response).to render_template(:show)
+    end
+
+    it "instantiates an instance variable with the passed id" do
+      expect(assigns(:campaign)).to eq(campaign)
+    end
+  end
+
   describe "#update" do
 
   end
