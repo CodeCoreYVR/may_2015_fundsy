@@ -60,6 +60,19 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "with invalid attributes" do
+      def invalid_request
+        post :create, user: {first_name: "tam",
+                             password: "abcd"}
+      end
+
+      it "renders the new template" do
+        invalid_request
+        expect(response).to render_template(:new)
+      end
+
+      it "doesn't change the user count" do
+        expect { invalid_request }.to_not change { User.count }
+      end
 
     end
   end
