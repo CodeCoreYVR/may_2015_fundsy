@@ -123,7 +123,6 @@ RSpec.describe CampaignsController, type: :controller do
   end
 
   describe "#index" do
-
     it "renders the index template" do
       get :index
       expect(response).to render_template(:index)
@@ -138,7 +137,29 @@ RSpec.describe CampaignsController, type: :controller do
   end
 
   describe "#update" do
-
+    context "with user not signed in" do
+      it "redirects to sign in page" do
+        patch :update, id: campaign.id
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+    context "with user signed in" do
+      context "user is not the owner of the campaign" do
+        it "raises an error"
+      end
+      context "user is the owner of the campaign" do
+        context "with valid update attributes" do
+          it "updates the passed values in the database"
+          it "redirects to the show page"
+          it "sets a flash message"
+        end
+        context "with invalid update attributes" do
+          it "doesn't update any field in the database"
+          it "renders the edit page"
+          it "sets a flash message"
+        end
+      end
+    end
   end
 
 end

@@ -1,5 +1,5 @@
 class CampaignsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :edit]
+  before_action :authenticate_user!, only: [:create, :edit, :update]
 
   def index
     @campaigns = Campaign.all
@@ -27,5 +27,9 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.find params[:id]
+  end
+
+  def update
+    render nothing: true
   end
 end
