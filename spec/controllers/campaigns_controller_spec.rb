@@ -198,17 +198,41 @@ RSpec.describe CampaignsController, type: :controller do
 
   describe "#destroy" do
     context "without a signed in user" do
-      it "redirects to new session path"
+      it "redirects to new session path" do
+        delete :destroy, id: campaign.id
+        expect(response).to redirect_to(new_session_path)
+      end
     end
 
     context "with signed in user" do
-      context "with the owner logged in" do
-        it "removes the campaign from the database"
-        it "redirects to the index page"
-        it "sets a flash message"
-      end
+      before { request.session[:user_id] = user.id }
       context "with non-owner logged in" do
-        it "raises an error"
+        it "raises an error" do
+          request.session[:user_id] = user_1.id
+          expect do
+            delete :destroy, id: campaign.id
+          end.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+      context "with the owner logged in" do
+        # def delete_request
+        #   delete :destroy, id: campaign.id
+        # end
+        before { delete :destroy, id: campaign.id }
+
+        it "removes the campaign from the database" do
+          expect(Campaign.find_by_id(campaign.id)).to_not be
+          # campaign
+          # expect { delete_request }.to change { Campaign.count }.by(-1)
+        end
+
+        it "redirects to the index page" do
+          expect(response).to redirect_to(campaigns_path)
+        end
+
+        it "sets a flash message" do
+          expect(flash[:notice]).to be
+        end
       end
     end
   end

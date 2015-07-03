@@ -1,5 +1,6 @@
 class CampaignsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :edit, :update]
+  before_action :authenticate_user!, only: [:create, :edit, :update, :destroy]
+  before_action :find_campaign, only: [:edit, :update, :destroy]
 
   def index
     @campaigns = Campaign.all
@@ -10,8 +11,6 @@ class CampaignsController < ApplicationController
   end
 
   def create
-    campaign_params = params.require(:campaign).
-                        permit(:title, :description, :due_date, :goal)
     @campaign = Campaign.new campaign_params
     @campaign.user = current_user
     if @campaign.save
@@ -22,7 +21,6 @@ class CampaignsController < ApplicationController
   end
 
   def edit
-    @campaign = current_user.campaigns.find params[:id]
   end
 
   def show
@@ -30,9 +28,6 @@ class CampaignsController < ApplicationController
   end
 
   def update
-    @campaign = current_user.campaigns.find params[:id]
-    campaign_params = params.require(:campaign).
-                        permit(:title, :description, :due_date, :goal)
     if @campaign.update campaign_params
       # redirect_to @campaign
       redirect_to campaign_path(@campaign), notice: "updated!"
@@ -41,4 +36,20 @@ class CampaignsController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @campaign.destroy
+    redirect_to campaigns_path, notice: "Campaign deleted"
+  end
+
+  private
+
+  def find_campaign
+    @campaign = current_user.campaigns.find params[:id]
+  end
+
+  def campaign_params
+    params.require(:campaign).permit(:title, :description, :due_date, :goal)
+  end
+
 end
