@@ -122,6 +122,21 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
+  describe "#index" do
+
+    it "renders the index template" do
+      get :index
+      expect(response).to render_template(:index)
+    end
+
+    it "instantiates campaigns variable a list of all campaigns in DB" do
+      campaign # this calls the variable in the `let` which creates a campaign
+      campaign_1 = create(:campaign)
+      get :index
+      expect(assigns(:campaigns)).to eq([campaign, campaign_1])
+    end
+  end
+
   describe "#update" do
 
   end
