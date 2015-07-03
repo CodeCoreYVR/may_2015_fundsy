@@ -144,22 +144,72 @@ RSpec.describe CampaignsController, type: :controller do
       end
     end
     context "with user signed in" do
+      before do
+        request.session[:user_id] = user.id
+      end
+
       context "user is not the owner of the campaign" do
-        it "raises an error"
+        it "raises an error" do
+          request.session[:user_id] = user_1.id
+          # expect { patch :update, id: campaign.id }.to raise_error(ActiveRecord::RecordNotFound)
+          expect do
+            patch :update, id: campaign.id
+          end.to raise_error(ActiveRecord::RecordNotFound)
+        end
       end
       context "user is the owner of the campaign" do
         context "with valid update attributes" do
-          it "updates the passed values in the database"
-          it "redirects to the show page"
-          it "sets a flash message"
+          before do
+            patch :update, id: campaign.id, campaign: {title: "abc"}
+          end
+
+          it "updates the passed values in the database" do
+            expect(campaign.reload.title).to eq("abc")
+          end
+
+          it "redirects to the show page" do
+            expect(response).to redirect_to(campaign_path(campaign))
+          end
+
+          it "sets a flash message" do
+            expect(flash[:notice]).to be
+          end
         end
         context "with invalid update attributes" do
-          it "doesn't update any field in the database"
-          it "renders the edit page"
-          it "sets a flash message"
+          before do
+            patch :update, id: campaign.id, campaign: {title: "", description: "abc"}
+          end
+
+          it "doesn't update any field in the database" do
+            expect(campaign.reload.description).to_not eq("abc")
+          end
+
+          it "renders the edit page" do
+            expect(response).to render_template(:edit)
+          end
+
+          it "sets a flash message" do
+            expect(flash[:alert]).to be
+          end
         end
       end
     end
   end
 
+  describe "#destroy" do
+    context "without a signed in user" do
+      it "redirects to new session path"
+    end
+
+    context "with signed in user" do
+      context "with the owner logged in" do
+        it "removes the campaign from the database"
+        it "redirects to the index page"
+        it "sets a flash message"
+      end
+      context "with non-owner logged in" do
+        it "raises an error"
+      end
+    end
+  end
 end

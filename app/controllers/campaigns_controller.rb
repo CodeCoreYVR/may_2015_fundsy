@@ -30,6 +30,15 @@ class CampaignsController < ApplicationController
   end
 
   def update
-    render nothing: true
+    @campaign = current_user.campaigns.find params[:id]
+    campaign_params = params.require(:campaign).
+                        permit(:title, :description, :due_date, :goal)
+    if @campaign.update campaign_params
+      # redirect_to @campaign
+      redirect_to campaign_path(@campaign), notice: "updated!"
+    else
+      flash[:alert] = "update unsuccessful"
+      render :edit
+    end
   end
 end
