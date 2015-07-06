@@ -18,7 +18,7 @@
         1,
         null,
         1,
-        6,
+        10,
         null,
         null,
         1,
@@ -242,6 +242,11 @@
         5,
         null,
         null,
+        null,
+        1,
+        0,
+        0,
+        null,
         null
       ],
       "/Users/tammam/codecore/may_2015/fundsy/spec/controllers/users_controller_spec.rb": [
@@ -328,7 +333,7 @@
       "/Users/tammam/codecore/may_2015/fundsy/app/controllers/users_controller.rb": [
         1,
         1,
-        7,
+        3,
         null,
         null,
         1,
@@ -428,7 +433,6 @@
         null,
         1,
         null,
-        1,
         1,
         null,
         1,
@@ -670,6 +674,6 @@
         null
       ]
     },
-    "timestamp": 1436219096
+    "timestamp": 1436221025
   }
 }

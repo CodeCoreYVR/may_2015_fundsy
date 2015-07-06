@@ -7,12 +7,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<%# flash[:notice] || flash[:alert]  %>
-<% if user_signed_in? %>
-  <%= current_user.full_name %>
-<% end %>
-<%= notice || alert %>
-<%= yield %>
+  <div class="container">
+    <%= render "/layouts/nav" %>
+    <% if notice %>
+      <div class="alert alert-success"><%= notice %></div>
+    <% elsif alert %>
+      <div class="alert alert-danger"><%= alert %></div>
+    <% end %>
+
+    <%= yield %>
+  </div>
 
 </body>
 </html>
