@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature "Campaigns", type: :feature do
-  let(:user) { create(:user) }
+  let(:user)     { create(:user)                 }
+  let(:campaign) { create(:campaign, user: user) }
 
   describe "Home Page" do
     it "displays a welcome message" do
@@ -65,6 +66,22 @@ RSpec.feature "Campaigns", type: :feature do
       expect(after_count - before_count).to eq(1)
     end
 
+  end
+
+  describe "Editing a campaign" do
+    it "updates the records and redirects to the show page" do
+      login_via_web(user)
+      visit edit_campaign_path(campaign)
+
+      fill_in "Title", with: "some new valid title"
+
+      save_and_open_page
+      click_button "Update Campaign"
+
+      expect(current_path).to eq(campaign_path(campaign))
+      expect(page).to have_text /some new valid title/i
+
+    end
   end
 
 end
