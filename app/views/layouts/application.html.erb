@@ -7,7 +7,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<%# flash[:notice] || flash[:alert]  %>
+<% if user_signed_in? %>
+  <%= current_user.full_name %>
+<% end %>
+<%= notice || alert %>
 <%= yield %>
 
 </body>
