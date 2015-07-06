@@ -29,9 +29,17 @@ RSpec.feature "Campaigns", type: :feature do
     end
 
     context "diplaying a single campaign" do
+      let!(:campaign) { create(:campaign) }
 
-      it "diplays the campaign title in a h1 element"
-      it "displays the campaign body"
+      it "diplays the campaign title in a h1 element" do
+        visit campaign_path(campaign)
+        expect(page).to have_selector("h1", /#{campaign.title}/i)
+      end
+
+      it "displays the campaign description" do
+        visit campaign_path(campaign)
+        expect(page).to have_text /#{campaign.description}/i
+      end
 
     end
   end
