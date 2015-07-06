@@ -34,6 +34,8 @@ gem "simple_form"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'simplecov', :require => false, :group => :test
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'

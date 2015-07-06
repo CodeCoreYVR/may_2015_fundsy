@@ -75,7 +75,6 @@ RSpec.feature "Campaigns", type: :feature do
 
       fill_in "Title", with: "some new valid title"
 
-      save_and_open_page
       click_button "Update Campaign"
 
       expect(current_path).to eq(campaign_path(campaign))
