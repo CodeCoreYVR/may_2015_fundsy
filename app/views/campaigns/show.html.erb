@@ -13,3 +13,15 @@
     </div>
   <% end %>
 </div>
+
+<%= simple_form_for [@campaign, @comment] do |f| %>
+  <%= f.input :body %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
+
+<h2>Comments</h2>
+<% @campaign.comments.each do |comment| %>
+  <div class="well">
+    <%= comment.body %>
+  </div>
+<% end %>

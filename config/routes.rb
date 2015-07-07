@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
+  resources :discussions do
+    resources :comments, only: [:create, :destroy]
+  end
   resources :pledges
   resources :users, only: [:new, :create]
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
-  resources :campaigns
+
+  resources :campaigns do
+    resources :comments, only: [:create, :destroy]
+  end
 
   root "campaigns#index"
   # The priority is based upon order of creation: first created -> highest priority.

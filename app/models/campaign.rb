@@ -3,6 +3,10 @@ class Campaign < ActiveRecord::Base
   has_many :pledges, dependent: :destroy
   has_many :reward_levels, dependent: :destroy
 
+  # we need to add as: :commentable because comments has a belongs to
+  # in a ploymorphic association fashion
+  has_many :comments, dependent: :destroy, as: :commentable
+
   accepts_nested_attributes_for :reward_levels, allow_destroy: true,
     reject_if: lambda {|x| x[:amount].empty? &&
                            x[:title].empty?  &&

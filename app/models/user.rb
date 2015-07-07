@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :campaigns, dependent: :destroy
+  has_many :comments
 
   has_secure_password
 
