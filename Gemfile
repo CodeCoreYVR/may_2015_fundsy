@@ -31,6 +31,8 @@ gem "simple_form"
 gem "bootstrap-sass"
 gem "quiet_assets"
 
+gem "cocoon"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

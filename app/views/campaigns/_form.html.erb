@@ -1,13 +1,19 @@
+<%#= debug @campaign.errors.messages %>
 <%= simple_form_for @campaign do |f| %>
   <%= f.input :title %>
   <%= f.input :description %>
   <%= f.input :goal %>
   <h2>Reward Levels</h2>
-  <%= f.simple_fields_for :reward_levels do |rl| %>
-     <%= rl.input :title %>
-     <%= rl.input :description %>
-     <%= rl.input :amount %>
-     <hr>
+  <% if @campaign.errors.messages.has_key?(:reward_levels) %>
+    <div class="alert alert-danger">You must provide at least one reward level</div>
   <% end %>
+  <div id="reward_levels">
+    <%= f.simple_fields_for :reward_levels do |rl| %>
+      <%= render "reward_level_fields", f: rl  %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'add reward level', f, :reward_levels %>
+    </div>
+  </div>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
