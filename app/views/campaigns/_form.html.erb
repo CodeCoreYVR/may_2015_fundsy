@@ -2,5 +2,12 @@
   <%= f.input :title %>
   <%= f.input :description %>
   <%= f.input :goal %>
+  <h2>Reward Levels</h2>
+  <%= f.simple_fields_for :reward_levels do |rl| %>
+     <%= rl.input :title %>
+     <%= rl.input :description %>
+     <%= rl.input :amount %>
+     <hr>
+  <% end %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>

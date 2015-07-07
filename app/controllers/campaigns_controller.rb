@@ -8,6 +8,7 @@ class CampaignsController < ApplicationController
 
   def new
     @campaign = Campaign.new
+    2.times { @campaign.reward_levels.build }
   end
 
   def create
@@ -16,6 +17,11 @@ class CampaignsController < ApplicationController
     if @campaign.save
       redirect_to campaign_path(@campaign), notice: "Campaign created!"
     else
+      # this will generate an associated number of reward levels that is the
+      # difference between the default number and the accepted count
+      # @campaign.reward_levels.length: the number of reward levels accepted
+      reward_level_count = 2 - @campaign.reward_levels.length
+      reward_level_count.times { @campaign.reward_levels.build }
       render :new
     end
   end
@@ -49,7 +55,8 @@ class CampaignsController < ApplicationController
   end
 
   def campaign_params
-    params.require(:campaign).permit(:title, :description, :due_date, :goal)
+    params.require(:campaign).permit(:title, :description,
+    :due_date, :goal, {reward_levels_attributes: [:title, :description, :amount, :id]})
   end
 
 end
