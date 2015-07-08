@@ -3,8 +3,12 @@
   <p><%= @campaign.description %></p>
   <%= link_to "edit", edit_campaign_path(@campaign) %>
   <%= link_to "delete", @campaign, method: :delete, data: {confirm: "Are you sure?"} %>
-  <%= link_to "publish", campaign_publishings_path(@campaign), method: :post,
+  <% if can? :publish, @campaign %>
+    <%= link_to "publish", campaign_publishings_path(@campaign), method: :post,
                 data: {confirm: "Are you sure? You won't be able to edit it again"}%>
+  <% end %>
+  <%= link_to "cancel", campaign_cancellings_path(@campaign), method: :post,
+                data: {confirm: "Are you sure?"} %>
 </div>
 <div class="col-md-3">
   <% @campaign.reward_levels.each do |level| %>

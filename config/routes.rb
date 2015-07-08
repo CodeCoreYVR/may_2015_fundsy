@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   resources :discussions do
     resources :comments, only: [:create, :destroy]
   end
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
   resources :campaigns do
     resources :comments, only: [:create, :destroy]
     resources :publishings, only: [:create]
+    resources :cancellings, only: [:create]
   end
 
   root "campaigns#index"

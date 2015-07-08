@@ -35,6 +35,11 @@ gem "cocoon"
 
 gem "aasm"
 
+gem "cancancan"
+
+gem "devise"
+gem 'activeadmin', github: 'activeadmin'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
