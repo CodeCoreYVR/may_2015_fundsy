@@ -33,6 +33,8 @@ gem "quiet_assets"
 
 gem "cocoon"
 
+gem "aasm"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -45,6 +47,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem "faker"
+
+  gem "hirb"
+  gem "awesome_print"
+  gem "interactive_editor"
 
   gem "capybara"
   gem "launchy"

@@ -3,7 +3,7 @@ class CampaignsController < ApplicationController
   before_action :find_campaign, only: [:edit, :update, :destroy]
 
   def index
-    @campaigns = Campaign.all
+    @campaigns = Campaign.published
   end
 
   def new

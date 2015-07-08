@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :campaigns do
     resources :comments, only: [:create, :destroy]
+    resources :publishings, only: [:create]
   end
 
   root "campaigns#index"
