@@ -44,6 +44,10 @@ gem "cancancan"
 gem "devise"
 gem 'activeadmin', github: 'activeadmin'
 
+gem 'underscore-rails'
+gem 'geocoder'
+gem 'gmaps4rails'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

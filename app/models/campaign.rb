@@ -5,6 +5,10 @@ class Campaign < ActiveRecord::Base
 
   scope :published, lambda { where(aasm_state: :published) }
 
+  # geocoded_by / geocode methods come from the Geocoder gem
+  geocoded_by :address
+  after_validation :geocode          # auto-fetch coordinates
+
   include AASM
 
   # AASM will use aasm_state database field by default to store the state

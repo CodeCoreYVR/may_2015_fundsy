@@ -18,4 +18,6 @@
 //= require components
 //= require bootstrap
 //= require cocoon
+//= require underscore
+//= require gmaps/google
 //= require_tree .
