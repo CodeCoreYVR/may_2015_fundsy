@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  # geocoded_by / geocode methods come from the Geocoder gem
+  geocoded_by :address
+  after_validation :geocode          # auto-fetch coordinates
+
   validates :first_name, presence: true
   validates :email, presence: true, uniqueness: true,
             format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i

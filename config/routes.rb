@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :nearby_campaigns, only: [:index]
+
   get 'spa/index'
 
   devise_for :admin_users, ActiveAdmin::Devise.config

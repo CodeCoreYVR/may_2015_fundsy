@@ -1,4 +1,14 @@
 <h1>Welcome to Fund.sy</h1>
+<h2>Recent Campaiangs</h2>
+<h2>All campaigns</h2>
+<%= cache("recent_campaigns", skip_digest: true) do %>
+  <% @recent_campaigns.each do |campaign| %>
+    <div class="well">
+      <%= link_to campaign.title.upcase, campaign %>
+    </div>
+  <% end %>
+<% end %>
+<hr>
 <h2>All campaigns</h2>
 <% @campaigns.each do |campaign| %>
   <div class="well">

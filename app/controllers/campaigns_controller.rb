@@ -3,6 +3,7 @@ class CampaignsController < ApplicationController
   before_action :find_campaign, only: [:edit, :update, :destroy]
 
   def index
+    @recent_campaigns = Campaign.published.limit(3).order("created_at DESC")
     @campaigns = Campaign.published
     respond_to do |format|
       format.html { render }
@@ -34,7 +35,9 @@ class CampaignsController < ApplicationController
   end
 
   def show
-    @campaign = Campaign.find params[:id]
+    @campaign = Campaign.includes(:comments, :reward_levels).
+                         references(:comments, :reward_levels).
+                         find(params[:id])
     @comment  = Comment.new
     respond_to do |format|
       format.html { render }

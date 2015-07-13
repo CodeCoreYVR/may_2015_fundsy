@@ -1,5 +1,5 @@
 class RewardLevel < ActiveRecord::Base
-  belongs_to :campaign
+  belongs_to :campaign, touch: true
 
   validates :title, presence: true
   validates :description, presence: true
