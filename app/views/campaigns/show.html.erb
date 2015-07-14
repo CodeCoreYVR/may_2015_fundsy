@@ -27,12 +27,12 @@
   </div>
 
   <h2>Pledge</h2>
-  <%= simple_form_for [@campaign, @pledge] do |f| %>
+  <%= simple_form_for [@campaign, (@pledge || Pledge.new)] do |f| %>
     <%= f.input :amount %>
     <%= f.submit class: "btn btn-primary" %>
   <% end %>
 
-  <%= simple_form_for [@campaign, @comment] do |f| %>
+  <%= simple_form_for [@campaign, (@comment || Comment.new)] do |f| %>
     <%= f.input :body %>
     <%= f.submit class: "btn btn-primary" %>
   <% end %>
