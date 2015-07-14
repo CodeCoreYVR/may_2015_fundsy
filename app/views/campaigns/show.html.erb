@@ -1,19 +1,18 @@
 <%= cache(@campaign) do %>
   <div class="col-md-9">
-    <h1><%= @campaign.title %></h1>
+    <h1><%= @campaign.title %>
+      <span class="label <%= @campaign.state_class %>">
+        <%= @campaign.aasm_state %>
+      </span>
+    </h1>
     <p><%= @campaign.description %></p>
     <div style='width: 800px;'>
       <div id="map" style='width: 800px; height: 400px;'></div>
     </div>
-
-    <%= link_to "edit", edit_campaign_path(@campaign) %>
-    <%= link_to "delete", @campaign, method: :delete, data: {confirm: "Are you sure?"} %>
-    <% if can? :publish, @campaign %>
-      <%= link_to "publish", campaign_publishings_path(@campaign), method: :post,
-                  data: {confirm: "Are you sure? You won't be able to edit it again"}%>
-    <% end %>
-    <%= link_to "cancel", campaign_cancellings_path(@campaign), method: :post,
-                  data: {confirm: "Are you sure?"} %>
+    <%= @campaign.edit_button %>
+    <%= @campaign.delete_button %>
+    <%= @campaign.publish_button %>
+    <%= @campaign.cancel_button %>
   </div>
   <div class="col-md-3">
     <% @campaign.reward_levels.each do |level| %>
@@ -26,6 +25,12 @@
       <% end %>
     <% end %>
   </div>
+
+  <h2>Pledge</h2>
+  <%= simple_form_for [@campaign, @pledge] do |f| %>
+    <%= f.input :amount %>
+    <%= f.submit class: "btn btn-primary" %>
+  <% end %>
 
   <%= simple_form_for [@campaign, @comment] do |f| %>
     <%= f.input :body %>

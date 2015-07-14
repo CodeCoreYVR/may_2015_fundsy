@@ -12,6 +12,6 @@
 <h2>All campaigns</h2>
 <% @campaigns.each do |campaign| %>
   <div class="well">
-    <%= link_to campaign.title.upcase, campaign %>
+    <%= link_to campaign.decorate.title, campaign %>
   </div>
 <% end %>

@@ -37,8 +37,9 @@ class CampaignsController < ApplicationController
   def show
     @campaign = Campaign.includes(:comments, :reward_levels).
                          references(:comments, :reward_levels).
-                         find(params[:id])
+                         find(params[:id]).decorate
     @comment  = Comment.new
+    @pledge   = Pledge.new
     respond_to do |format|
       format.html { render }
       format.json { render json: {campaign: @campaign,
