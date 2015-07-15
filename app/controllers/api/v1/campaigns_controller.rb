@@ -10,6 +10,11 @@ class Api::V1::CampaignsController < ApplicationController
   end
 
   def create
-    render json: {success: true}
+    campaign = Campaign.new params.require(:campaign).permit(:title, :description, :goal)
+    if campaign.save
+      render json: {success: true}
+    else
+      render json: {success: false, errors: campaign.errors.full_messages}
+    end
   end
 end
