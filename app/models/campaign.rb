@@ -56,7 +56,7 @@ class Campaign < ActiveRecord::Base
                            x[:description].empty? }
 
   # this makes sure the campaign is created with at least one reward level
-  validates :reward_levels, presence: true
+  # validates :reward_levels, presence: true
 
   validates :title, presence: true, uniqueness: true
   validates :description, presence: true

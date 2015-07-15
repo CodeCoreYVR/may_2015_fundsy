@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  before_create :generate_api_key
+
   # geocoded_by / geocode methods come from the Geocoder gem
   geocoded_by :address
   after_validation :geocode          # auto-fetch coordinates
@@ -15,6 +17,14 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}".strip
+  end
+
+  private
+
+  def generate_api_key
+    begin
+      self.api_key = SecureRandom.hex
+    end while User.exists?(api_key: self.api_key)
   end
 
 end

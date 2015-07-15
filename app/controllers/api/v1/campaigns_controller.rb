@@ -1,4 +1,4 @@
-class Api::V1::CampaignsController < ApplicationController
+class Api::V1::CampaignsController < Api::BaseController
   protect_from_forgery with: :null_session
 
   def index
@@ -10,11 +10,14 @@ class Api::V1::CampaignsController < ApplicationController
   end
 
   def create
-    campaign = Campaign.new params.require(:campaign).permit(:title, :description, :goal)
+    campaign       = Campaign.new params.require(:campaign).
+                                  permit(:title, :description, :goal)
+    campaign.user = @user
     if campaign.save
       render json: {success: true}
     else
       render json: {success: false, errors: campaign.errors.full_messages}
     end
   end
+
 end
