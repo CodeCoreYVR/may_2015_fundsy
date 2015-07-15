@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  get 'callbacks/index'
+
   resources :nearby_campaigns, only: [:index]
+
+    get "/auth/twitter", as: :signin_with_twitter
+    get "/auth/:provider/callback" => "callbacks#index"
 
   get 'spa/index'
 

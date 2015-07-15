@@ -12,8 +12,16 @@ class User < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :email, presence: true, uniqueness: true,
-            format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-  validates :password, presence: true
+            format: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, unless: :from_oauth?
+  validates :password, presence: true, unless: :from_oauth?
+
+  def from_oauth?
+    uid.present? && provider.present?
+  end
+
+  def can_publish_to_twitter?
+    uid.present? && provider.present? && provider == "twitter"
+  end
 
   def full_name
     "#{first_name} #{last_name}".strip

@@ -40,6 +40,8 @@ gem 'rack-cors', :require => 'rack/cors'
 gem "bootstrap-sass"
 gem "quiet_assets"
 
+gem "twitter"
+
 gem "cocoon"
 
 gem "aasm"
