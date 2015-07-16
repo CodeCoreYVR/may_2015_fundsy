@@ -10,8 +10,8 @@ class Pledges::CreatePledge
   # public instance method that performs that action of this
   # class
   def call
-    @pledge = Pledge.new params
-    @pledge.user = user
+    @pledge          = Pledge.new params
+    @pledge.user     = user
     @pledge.campaign = campaign
     if @pledge.save
       PledgesMailer.notify_campaign_owner(@pledge).deliver_now

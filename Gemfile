@@ -35,6 +35,8 @@ gem 'virtus'
 
 gem "simple_form"
 
+gem "stripe"
+
 gem 'rack-cors', :require => 'rack/cors'
 
 gem "bootstrap-sass"

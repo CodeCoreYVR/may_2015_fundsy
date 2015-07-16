@@ -25,6 +25,10 @@ Rails.application.routes.draw do
     resources :cancellings, only: [:create]
   end
 
+  resources :pledges, only: [] do
+    resources :payments, only: [:new, :create]
+  end
+
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
       resources :campaigns

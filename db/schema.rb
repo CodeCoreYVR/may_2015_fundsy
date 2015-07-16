@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715230803) do
+ActiveRecord::Schema.define(version: 20150716161659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,8 +91,10 @@ ActiveRecord::Schema.define(version: 20150715230803) do
     t.integer  "user_id"
     t.integer  "campaign_id"
     t.integer  "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "stripe_txn_id"
+    t.string   "aasm_state"
   end
 
   add_index "pledges", ["campaign_id"], name: "index_pledges_on_campaign_id", using: :btree
@@ -114,8 +116,8 @@ ActiveRecord::Schema.define(version: 20150715230803) do
     t.string   "last_name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "address"
     t.float    "longitude"
     t.float    "latitude"
@@ -124,6 +126,9 @@ ActiveRecord::Schema.define(version: 20150715230803) do
     t.string   "provider"
     t.string   "credentials_token"
     t.string   "credentials_secret"
+    t.string   "stripe_customer_token"
+    t.string   "stripe_last_4"
+    t.string   "stripe_card_type"
   end
 
   add_index "users", ["api_key"], name: "index_users_on_api_key", using: :btree

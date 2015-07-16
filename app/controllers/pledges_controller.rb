@@ -8,7 +8,7 @@ class PledgesController < ApplicationController
                                          params:   pledge_params,
                                          user:     current_user)
     if service.call
-      redirect_to @campaign
+      redirect_to new_pledge_payment_path(service.pledge), notice: "Please make the payment"
     else
       @pledge = service.pledge
       render "/campaigns/show"
